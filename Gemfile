@@ -20,11 +20,12 @@ source 'https://rubygems.org'
  gem 'turbolinks'
  gem 'bootstrap'
  gem 'figaro'
+ gem 'devise'
 
  group :development, :test do
    gem 'byebug'
    gem 'spring'
-   gem 'rspec-rails', '~> 3.0.beta' 
+   gem 'rspec-rails', '~> 3.0.beta'
    gem 'shoulda'
    gem 'faker'
    gem 'factory_girl_rails'
