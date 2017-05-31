@@ -1,4 +1,4 @@
-class DowngradeController < ApplicationController
+class DowngradesController < ApplicationController
   def new
   end
 
@@ -9,9 +9,11 @@ class DowngradeController < ApplicationController
     end
     flash[:notice] = "You have successfully downgraded your account " +
       "and your private wikis are now public"
-  else
+    else
     flash[:notice] = "There was an error downgrading your account, " +
       "please try again"
+    end
+
+    redirect_to root_path
   end
-  redirect_to root_path
 end
