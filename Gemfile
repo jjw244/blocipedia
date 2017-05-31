@@ -14,6 +14,7 @@ ruby "2.3.4"
  gem 'pundit'
  gem 'stripe'
  gem 'redcarpet'
+ gem 'faker'
 
  group :production do
    gem 'pg'
@@ -30,7 +31,6 @@ ruby "2.3.4"
    gem 'spring'
    gem 'rspec-rails', '~> 3.0.beta'
    gem 'shoulda'
-   gem 'faker'
    gem 'factory_girl_rails'
    gem 'pry-rails'
  end
