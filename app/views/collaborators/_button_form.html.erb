@@ -1,0 +1,7 @@
+<div class='field'>
+  <%= hidden_field_tag "user[wiki_id][]", nil %>
+  <% User.all.each do |collaborator| %>
+    <%= check_box_tag "user[wiki_id][]", collaborator.id, @user.wiki_ids.include?(collaborator.id), id: dom_id(collaborator) %>
+    <%= collaborator.email %><br>
+  <% end %>
+</div>
