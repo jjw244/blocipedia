@@ -13,17 +13,3 @@
     <%= render partial: 'form' %>
   </div>
 </div>
-
-<div class="row">
-  <div class="col-md-12">
-    <h3>Manage collaborators</h3>
-      <% @users.each do |user| %>
-        <p><%= user.email %></p>
-        <% if @wiki.users.include?(user) %>
-          <p><%= link_to 'remove collaborator', wiki_collaborators_path(user_id: user.id, wiki_id: @wiki.id), method: :delete, class: 'btn btn-warning' %></p>
-        <% else %>
-          <p><%= link_to 'add collaborator', wiki_collaborators_path(user_id: user.id, wiki_id: @wiki.id), method: :post, class: 'btn btn-success' %></p>
-        <% end %>
-      <% end %>
-  </div>
-</div>

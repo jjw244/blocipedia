@@ -30,7 +30,6 @@ class WikisController < ApplicationController
 
   def edit
     @wiki = Wiki.find(params[:id])
-    @users = User.where.not(id: current_user.id)
   end
 
   def update

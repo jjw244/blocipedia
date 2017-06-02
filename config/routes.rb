@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
-  resources :wikis do
-    resource :collaborators, only: [:create, :destroy]
-  end
+  resources :wikis
   resources :charges, only: [:new, :create]
   resources :downgrades, only: [:new, :create]
   devise_for :users
