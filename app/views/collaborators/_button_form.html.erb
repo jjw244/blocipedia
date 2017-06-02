@@ -1,7 +1,15 @@
 <div class='field'>
-  <%= hidden_field_tag "user[wiki_id][]", nil %>
-  <% User.all.each do |collaborator| %>
-    <%= check_box_tag "user[wiki_id][]", collaborator.id, @user.wiki_ids.include?(collaborator.id), id: dom_id(collaborator) %>
-    <%= collaborator.email %><br>
+  <%= form_for [wiki, Collaborator.new] do |f| %>
+    <%= f.label :collaborators %>
+    <%= f.select :user, options_for_select(@user_emails, :selected => params[:user]) %>
+    <%= f.submit 'Save' %>
+  <% end %>
+
+  <% if wiki.users.any? %>
+    <h3>Current collaborators</h3>
+    <% wiki.users.each do |user| %>
+      <p><%= user.email %></p>
+      <%= link_to 'remove collaborator', wiki_collaborator_path(wiki), class: 'btn btn-danger' %>
+    <% end %>
   <% end %>
 </div>
