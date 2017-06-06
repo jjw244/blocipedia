@@ -1,6 +1,6 @@
 class CollaboratorsController < ApplicationController
   def update
-    @wiki = Wiki.find(params[:wiki_id])
+    @wiki = Wiki.friendly.find(params[:wiki_id])
     authorize @wiki
     if @wiki.update(wiki_params)
       flash[:notice] = "Wiki was updated."
@@ -13,7 +13,7 @@ class CollaboratorsController < ApplicationController
 
   def create
     user = User.find_by_email(params[:collaborator][:user])
-    @wiki = Wiki.find(params[:wiki_id])
+    @wiki = Wiki.friendly.find(params[:wiki_id])
     if @wiki.users.include?(user)
       flash[:alert] = "#{user.email} has already been added as a collaborator"
       redirect_to edit_wiki_path(@wiki)
@@ -29,7 +29,7 @@ class CollaboratorsController < ApplicationController
 
   def destroy
     user = User.find(params[:user_id])
-    @wiki = Wiki.find(params[:wiki_id])
+    @wiki = Wiki.friendly.find(params[:wiki_id])
     collaborator = Collaborator.find_by(params[:user_id])
     if collaborator.destroy
       flash[:notice] = "Collaborator: #{collaborator.user.email} has been removed"
