@@ -1,15 +1,21 @@
 class WikisController < ApplicationController
 
   def index
-    if current_user.standard?
-      @wikis = Wiki.where(private: false)
-    else
+    @user = current_user
+    if @user.admin?
       @wikis = Wiki.all
+    elsif @user.premium?
+      @wikis = Wiki.where(private: false) | @user.wiki_collaborations | @user.wikis
+    elsif @user.standard?
+      @wikis = Wiki.where(private: false) | @user.wiki_collaborations
+    else
+      @wikis = Wiki.where(private: false)
     end
   end
 
   def show
     @wiki = Wiki.find(params[:id])
+    authorize @wiki
   end
 
   def new
@@ -18,7 +24,6 @@ class WikisController < ApplicationController
 
   def create
     @wiki = current_user.wikis.new(wiki_params)
-
     if @wiki.save
       flash[:notice] = "Wiki was saved."
       redirect_to @wiki
@@ -29,8 +34,10 @@ class WikisController < ApplicationController
   end
 
   def edit
+    @user = current_user
     @wiki = Wiki.find(params[:id])
-    @users = User.where.not(id: current_user.id)
+    @user_emails = User.where.not(id: current_user.id || @wiki.users.pluck(:id)).map(&:email)
+    authorize @wiki
   end
 
   def update

@@ -1,14 +1,7 @@
 class CollaboratorsController < ApplicationController
-  def edit
-    @wiki = Wiki.find(params[:wiki_id])
-    @user = User.all
-    @user_emails = User.where.not(id: current_user.id || @wiki.users.pluck(:id)).map(&:email)
-  end
-
   def update
     @wiki = Wiki.find(params[:wiki_id])
     authorize @wiki
-
     if @wiki.update(wiki_params)
       flash[:notice] = "Wiki was updated."
       redirect_to @wiki
@@ -19,26 +12,30 @@ class CollaboratorsController < ApplicationController
   end
 
   def create
-    user = User.find(params[:user_id])
+    user = User.find_by_email(params[:collaborator][:user])
     @wiki = Wiki.find(params[:wiki_id])
-    if Collaborator.create(user_id: user.id, wiki_id: @wiki.id)
-      flash[:notice] = 'Collaborator added'
+    if @wiki.users.include?(user)
+      flash[:alert] = "#{user.email} has already been added as a collaborator"
+      redirect_to edit_wiki_path(@wiki)
     else
-      flash[:alert] = 'Collaborator not added'
+      if Collaborator.create(user_id: user.id, wiki_id: @wiki.id)
+        flash[:notice] = "#{user.email} is now a collaborator"
+      else
+        flash[:alert] = "#{user.email} was not added as a collaborator"
+      end
+      redirect_to edit_wiki_path(@wiki)
     end
-    redirect_to edit_wiki_path(@wiki)
   end
 
   def destroy
-    @user = User.find(params[:user_id])
+    user = User.find(params[:user_id])
     @wiki = Wiki.find(params[:wiki_id])
-    collaborator = Collaborator.find_by(user_id: @user.id, wiki_id: @wiki.id)
+    collaborator = Collaborator.find_by(params[:user_id])
     if collaborator.destroy
-      flash[:notice] = 'Collaborator removed'
+      flash[:notice] = "Collaborator: #{collaborator.user.email} has been removed"
     else
-      flash[:alert] = 'Collaborator not removed'
+      flash[:alert] = "Collaborator: #{collaborator.user.email} has not been removed"
     end
     redirect_to edit_wiki_path(@wiki)
-
   end
 end

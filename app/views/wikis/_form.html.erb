@@ -18,7 +18,7 @@
     <%= f.text_area :body, rows: 8, class: 'form-control', placeholder: "Enter wiki body" %>
     <small>
       <div class="text-right">
-        hover over text for syntax examples: 
+        hover over text for syntax examples:
         <strong title="**bold**">bold</strong>
         <em title="<em>italic</em>">italic</em>
         <q title="<q>quote</q>">quote</q>
@@ -38,5 +38,6 @@
   <% end %>
   <div class="form-group">
     <%= f.submit "Save", class: 'btn btn-success' %>
+    <%= link_to 'Cancel', wikis_path, class: 'btn btn-cancel' %>
   </div>
 <% end %>

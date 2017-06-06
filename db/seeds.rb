@@ -1,15 +1,5 @@
-# Create Collaborators
-2.times do
-  Collaborator.create!(
-    user_id: Faker::Number.unique.digit,
-    wiki_id: Faker::Number.unique.digit,
-    email: Faker::Internet.unique.email
-  )
-end
-collaborators = Collaborator.all
-
 # Create Users
-5.times do
+3.times do
   User.create!(
     email: Faker::Internet.unique.email,
     password: Faker::Internet.unique.password
@@ -18,7 +8,7 @@ end
 users = User.all
 
 # Create Wikis
-50.times do
+10.times do
   Wiki.create!(
     user: users.sample,
     title: Faker::Name.title,
@@ -41,7 +31,13 @@ user.update_attributes!(
   role: 'standard'
 )
 
+user = User.third
+user.update_attributes!(
+  email: 'jenni@bear.com',
+  password: 'fakefakefake',
+  role: 'admin'
+)
+
 puts "Seed finished"
 puts "#{User.count} users created"
 puts "#{Wiki.count} wikis created"
-puts "#{Collaborator.count} collaborators created"
