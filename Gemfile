@@ -15,6 +15,7 @@ ruby "2.3.4"
  gem 'stripe'
  gem 'redcarpet'
  gem 'faker'
+ gem 'friendly_id', '~> 5.1.0'
 
  group :production do
    gem 'pg'
