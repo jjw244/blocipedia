@@ -11,6 +11,6 @@ class WikiPolicy < ApplicationPolicy
   end
 
   def edit?
-    wiki.user == user || user.admin? || wiki.private == false || wiki.users.include?(user)
+    wiki.user == user || user.admin? || user.premium? || wiki.users.include?(user)
   end
 end
