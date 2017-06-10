@@ -1,9 +1,9 @@
 class Wiki < ActiveRecord::Base
   extend FriendlyId
-  friendly_id :title, use: :slugged
+  friendly_id :title, use: [:slugged, :history]
 
   def should_generate_new_friendly_id?
-    title_changed?
+    slug.nil? || title_changed?
   end
 
   belongs_to :user
