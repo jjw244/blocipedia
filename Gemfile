@@ -16,10 +16,12 @@ ruby "2.3.4"
  gem 'redcarpet'
  gem 'faker'
  gem 'friendly_id', '~> 5.1.0'
+ gem 'rack-timeout'
 
  group :production do
    gem 'pg'
    gem 'rails_12factor'
+   gem 'puma'
  end
 
  group :development do
