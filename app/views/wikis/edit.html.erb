@@ -1,12 +1,17 @@
-<h1>Edit Wiki</h1>
-
-<div class="row">
-  <div class="col-md-4">
-    <% if current_user.admin? || current_user.premium? || @wiki.users.include?(current_user) %>
-      <%= render partial: 'collaborators/collaborator_form' %>
-    <% end %>
-  </div>
-  <div class="col-md-8">
-    <%= render partial: 'form' %>
+<div class="container-fluid">
+  <div class="make-row">
+    <div class="row">
+      <div class="col-md-8">
+        <h1>Edit Wiki</h1>
+        <% if current_user.admin? || current_user.premium? || @wiki.users.include?(current_user) %>
+          <%= render partial: 'collaborators/collaborator_form' %>
+        <% end %>
+        <%= render 'form' %>
+      </div>
+      <div class="col-md-4">
+        <h1 style="color:steelblue", class="text-center"> Live Preview </h1>
+        <p id="wiki_preview"></p>
+      </div>
+    </div>
   </div>
 </div>
